@@ -14,6 +14,7 @@ int getBedrockStructureConfig(const int structureType, const int mc, StructureCo
     s_shipwreck_117   = {165745295, 10,  5, Shipwreck,       STRUCT_TRIANGULAR,0},
     s_shipwreck       = {165745295, 24, 20, Shipwreck,       0,0},
     s_swamp_hut       = { 14357617, 32, 24, Swamp_Hut,       0,0},
+    s_treasure        = { 16842397,  4,  2, Feature,         STRUCT_TRIANGULAR,0},
     s_village_117     = { 10387312, 27, 17, Village,         STRUCT_TRIANGULAR,0},
     s_village         = { 10387312, 34, 26, Village,         STRUCT_TRIANGULAR,0},
     // Nether structures
@@ -22,7 +23,6 @@ int getBedrockStructureConfig(const int structureType, const int mc, StructureCo
     s_ruined_portal_n = { 40552231, 25, 15, Ruined_Portal_N, STRUCT_NETHER,0},
     // End structures
     s_end_city        = { 10387313, 20,  9, End_City,        STRUCT_END|STRUCT_TRIANGULAR,0}
-    // s_unknown         = { 16842397,  4,  2, Feature,         STRUCT_TRIANGULAR,0} // Not sure which structure/feature this corresponds to
     ;
 
     // Chunkbase only goes back to Bedrock 1.14
@@ -53,6 +53,9 @@ int getBedrockStructureConfig(const int structureType, const int mc, StructureCo
         return mc >= MC_1_14;
     case Swamp_Hut: // -
         *sconf = s_swamp_hut;
+        return mc >= MC_1_14;
+    case Treasure:
+        *sconf = s_treasure;
         return mc >= MC_1_14;
     case Village: // -
         *sconf = mc <= MC_1_17 ? s_village_117 : s_village;
