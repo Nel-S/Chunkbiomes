@@ -4,6 +4,11 @@
 #include "cubiomes/finders.h"
 #include "Brng.h"
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 bool getBedrockStructureConfig(const int structureType, const int mc, StructureConfig *sconf);
 
 static inline ATTR(const)
@@ -70,5 +75,9 @@ Pos getBedrockLargeStructurePos(const StructureConfig *config, uint64_t seed, in
 	pos.z = (((uint64_t)regZ*config->regionSize + pos.z) << 4) + 8;
 	return pos;
 }
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
