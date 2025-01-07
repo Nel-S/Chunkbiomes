@@ -1,4 +1,9 @@
 cmake_minimum_required(VERSION 3.5)
+
+if (TARGET chunkbiomes)
+	return()
+endif()
+
 project(chunkbiomes)
 
 if (NOT CMAKE_BUILD_TYPE)
@@ -8,7 +13,7 @@ if (WIN32)
 	set(CMAKE_C_FLAGS "-D_WIN32")
 endif()
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -pedantic")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -fwrapv -ffast-math -Wall -Wextra -pedantic")
 set(CMAKE_C_FLAGS_DEBUG "-O0 -g3 -DDEBUG")
 
 set(HEADERS
@@ -19,7 +24,9 @@ set(SOURCES
 	Bfinders.c
 )
 
-add_subdirectory(cubiomes)
+if (NOT TARGET cubiomes)
+	add_subdirectory(cubiomes)
+endif()
 
 add_library(chunkbiomesObjects OBJECT ${SOURCES})
 set_property(TARGET chunkbiomesObjects PROPERTY POSITION_INDEPENDENT_CODE 1)
