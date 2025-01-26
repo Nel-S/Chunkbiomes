@@ -1,15 +1,21 @@
-#ifndef __BFINDERS_H
-#define __BFINDERS_H
+#ifndef _CHUNKBIOMES__BFINDERS_H
+#define _CHUNKBIOMES__BFINDERS_H
 
 #include "cubiomes/finders.h"
 #include "Brng.h"
+
+// enum StructureTypeExtended {
+// 	Fossil = FEATURE_NUM + 1
+// };
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 
-bool getBedrockStructureConfig(const int structureType, const int mc, StructureConfig *sconf);
+// uint64_t getBedrockPopulationSeed(int mc, uint64_t worldseed, int x, int z);
+
+bool getBedrockStructureConfig(int structureType, int mc, StructureConfig *sconf);
 
 static inline ATTR(const)
 Pos getBedrockFeatureChunkInRegion(const StructureConfig *config, uint64_t seed, int regX, int regZ);
@@ -25,6 +31,8 @@ Pos getBedrockLargeStructurePos(const StructureConfig *config, uint64_t seed, in
 
 bool getBedrockStructurePos(int structureType, int mc, uint64_t seed, int regX, int regZ, Pos *pos);
 
+bool isViableBedrockStructurePos(int structureType, Generator *g, int blockX, int blockZ, uint32_t flags);
+
 /* Returns the number of ravines found.
    For 1.17 and earlier, two ravine checks are performed per coordinate: one "ordinary" one and a second for ocean ravines.
    If the second is desired, `g` must be provided and have been initialized; in all other cases, `g` can be set to NULL.
@@ -37,9 +45,17 @@ int getRavinePos(int mc, uint64_t seed, int x, int z, const Generator *g, Struct
 // bool getBedrockRavinePos(uint64_t seed, int x, int z, StructureVariant *ravine);
 
 
+static inline
+void bedrockChunkGenerateRnd(uint64_t worldseed, int chunkX, int chunkZ, int n, MersenneTwister *mt) {
+    mSetSeed(mt, worldseed, 2);
+    mSetSeed(mt, (mNextIntUnbound(mt) * chunkX) ^ (mNextIntUnbound(mt) * chunkZ) ^ worldseed, n);
+}
+
 
 static inline ATTR(const)
 Pos getBedrockFeatureChunkInRegion(const StructureConfig *config, uint64_t seed, int regX, int regZ) {
+	// MersenneTwister backupMt;
+	// MersenneTwister *mtPointer = mt ? mt : &backupMt;
 	MersenneTwister mt;
 	mSetSeed(&mt, regX*UINT64_C(341873128712) + regZ*UINT64_C(132897987541) + seed + config->salt, 2);
 	Pos pos;

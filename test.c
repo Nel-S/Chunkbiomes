@@ -1,19 +1,26 @@
 #include "Bfinders.h"
+#include "cubiomes/util.h"
+#include <stdio.h>
 
 int main() {
 	const uint64_t SEED = 8675309;
 	const int OVERWORLD_STRUCTURES[] = {
 		Ancient_City,
 		Desert_Pyramid,
+		// Fossil, // Not supported yet
 		Igloo,
 		Jungle_Pyramid,
 		Mansion,
+		Mineshaft,
 		Monument,
+		Ocean_Ruin,
 		Outpost,
 		Ruined_Portal, 
 		Shipwreck,
 		Swamp_Hut,
-		/* Treasure, */ // Not supported yet
+		Trail_Ruins,
+		Treasure,
+		Trial_Chambers,
 		Village
 	};
 	const int NETHER_STRUCTURES[] = {
@@ -29,7 +36,6 @@ int main() {
 	Generator g;
 	setupGenerator(&g, MC_NEWEST, 0);
 	applySeed(&g, DIM_OVERWORLD, SEED);
-	// g.platform = PLATFORM_JAVA;
 
 	StructureConfig sconf;
 	Pos pos;
@@ -46,7 +52,7 @@ int main() {
 					continue;
 				}
 				// TODO: Investigate Chunkbase's isViableStructureTerrain for mansions
-				if (OVERWORLD_STRUCTURES[i] && (!isViableStructurePos(OVERWORLD_STRUCTURES[i], &g, pos.x, pos.z, 0) || !isViableStructureTerrain(OVERWORLD_STRUCTURES[i], &g, pos.x, pos.z))) continue;
+				if (OVERWORLD_STRUCTURES[i] && (!isViableBedrockStructurePos(OVERWORLD_STRUCTURES[i], &g, pos.x, pos.z, 0) || !isViableStructureTerrain(OVERWORLD_STRUCTURES[i], &g, pos.x, pos.z))) continue;
 				printf("%s: (%d, %d)\n", struct2str(OVERWORLD_STRUCTURES[i]), pos.x, pos.z);
 			}
 

@@ -1,11 +1,14 @@
-#ifndef __BRNG_H
-#define __BRNG_H
+#ifndef _CHUNKBIOMES__BRNG_H
+#define _CHUNKBIOMES__BRNG_H
 
 #include "cubiomes/rng.h"
 #include <stdbool.h>
 
 #ifndef MIN
     #define MIN(X, Y) ((X) < (Y) ? (X) : (Y))
+#endif
+#ifndef MAX
+    #define MAX(X, Y) ((X) > (Y) ? (X) : (Y))
 #endif
 
 /* ==================
@@ -104,7 +107,7 @@ static inline float mNextFloat(MersenneTwister *mt) {
     return mNextDouble(mt);
 }
 
-// Returns a pseudorandom boolean value.
+// Returns the next Boolean value.
 static inline bool mNextBool(MersenneTwister *mt) {
     return _mNext(mt) >> 31;
 }
