@@ -12,6 +12,7 @@ bool getBedrockStructureConfig(const int structureType, const int mc, StructureC
 	s_mansion         = { 10387319, 80, 60, Mansion,         DIM_OVERWORLD,0},
 	s_monument        = { 10387313, 32, 27, Monument,        DIM_OVERWORLD,0},
 	s_outpost         = {165745296, 80, 56, Outpost,         DIM_OVERWORLD,0},
+	s_ocean_ruin      = { 14357621, 20, 12, Ocean_Ruin,      DIM_OVERWORLD,0},
 	s_ruined_portal   = { 40552231, 40, 25, Ruined_Portal,   DIM_OVERWORLD,0},
 	s_shipwreck_117   = {165745295, 10,  5, Shipwreck,       DIM_OVERWORLD,0},
 	s_shipwreck       = {165745295, 24, 20, Shipwreck,       DIM_OVERWORLD,0},
@@ -49,6 +50,9 @@ bool getBedrockStructureConfig(const int structureType, const int mc, StructureC
 		return mc >= MC_1_14;
 	case Outpost:
 		*sconf = s_outpost;
+		return mc >= MC_1_14;
+	case Ocean_Ruin:
+		*sconf = s_ocean_ruin;
 		return mc >= MC_1_14;
 	case Ruined_Portal:
 		*sconf = s_ruined_portal;
@@ -114,6 +118,10 @@ bool getBedrockStructurePos(int structureType, int mc, uint64_t seed, int regX, 
 		return true;
 
 	case Shipwreck:
+		*pos = (mc <= MC_1_17 ? getBedrockLargeStructurePos : getBedrockFeaturePos)(&sconf, seed, regX, regZ);
+		return true;
+
+	case Ocean_Ruin:
 		*pos = (mc <= MC_1_17 ? getBedrockLargeStructurePos : getBedrockFeaturePos)(&sconf, seed, regX, regZ);
 		return true;
 
