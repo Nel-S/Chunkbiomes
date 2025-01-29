@@ -105,3 +105,4 @@ int getRavinePos(int mc, uint64_t seed, int x, int z, const Generator *g, Struct
 #endif
 
 #endif // CHUNKBIOMES_BFINDERS_H_
+ 
